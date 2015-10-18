@@ -1,5 +1,6 @@
 ﻿#include <iostream>
 #include <fstream>
+#include <iomanip>
 #include <vector>
 #include <string>
 #include "Tree.h"
@@ -17,6 +18,16 @@ int main() {
 	Tree a; 
 	a.DoundloadKeywords(keyword);
 
+	ofstream file1("Matrix.txt");
+	matrix m = a.CreateMatrix();
+	for (int i = 0; i < m.size(); i++){
+		for (int j = 0; j < m[i].size(); j++){
+			cout << setw(2) << m[i][j] << ' ';
+			file1 << m[i][j] << '\t';
+		}
+		cout << endl;
+		file1 << endl;
+	}
 	system("pause");
 	return 0; 
 }
