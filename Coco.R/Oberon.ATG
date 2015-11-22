@@ -1,0 +1,49 @@
+﻿COMPILER Programm 
+
+IGNORECASE
+CHARACTERS
+
+TOKENS
+N = "0123456789" .
+LogOperator = "="|"#"|"<"|"<="|">"|">="|"&"|"|" .
+MathMultiOperator = "*"|"/".
+MathSumOperator = "+"|"-".
+Logic = "TRUE"|"FALSE".
+
+PRODUCTIONS
+
+Programm = "MODULE" "Main;" Imports "VAR" Variables "BEGIN" Operators "END""Main".
+Imports = "IMPORT" Library   ";". 
+Library = "In,StdLog" [",Math"] .
+
+Variables = Variable { Variable } .
+Variable = Name ":" ["ARRAY" Integer "OF"] Type ";".
+
+Integer = N { N } .
+Name = ANY.
+Type = "INTEGER"|"REAL"|"BOOLEAN".
+
+Operators = Operator  { Operator } .
+Operator = ( Cin | Cout | Assignment | Cycle | Ramification )";".
+
+Cin = "In."("Open"| Methods "(" Name")" )  .
+Cout = "StdLog."( Methods "("Name")"|"Ln" )  .
+Methods = "Int"|"Real"|"Bool"|"String".
+
+Assignment = Name ":=" Expression  .
+Expression = SimpleExpression [ LogOperator SimpleExpression ]  .
+
+SimpleExpression = [ MathSumOperator ] Term [ MathSumOperator Term]     .
+
+Term  = Factor [ MathMultiOperator Factor ]   .
+
+Factor = "("Expression")"| Name | Integer | Logic | Realistic |"~"Factor    .
+Realistic = Integer  ["." Integer ] .
+
+Cycle = WhileDo | RepeatUntil | For  .
+WhileDo = "WHILE(" Expression ")DO" Operators "END" .
+RepeatUntil = "REPEAT" Operators "UNTIL(" Expression ")"  . 
+For = "FOR"Assignment"TO"Integer"DO"Operators"END" .
+Ramification = "IF" Expression"THEN"Operators ["ELSE"Operators ]"END" .
+
+END Programm.
